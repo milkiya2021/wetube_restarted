@@ -1,3 +1,6 @@
-export const editVideo = (req, res) => res.send("Edit video");
-export const watchVideo = (req, res) => res.send("Watch video");
-export const trending = (req, res) => res.send("Home Page videos");
+export const trending = (req, res) => res.render("home", { pageTitle: "Home" });
+export const edit = (req, res) => res.render("edit");
+export const see = (req, res) => res.render("watch");
+export const search = (req, res) => res.send("search");
+export const upload = (req, res) => res.send("upload");
+export const deleteVideo = (req, res) => res.send("deleteVideo");
