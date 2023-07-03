@@ -4,6 +4,7 @@ import session from "express-session";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
+import { localsMiddleware } from "./middlewares";
 
 const app = express();
 const logger = morgan("dev");
@@ -16,10 +17,14 @@ app.use(express.urlencoded({ extended: true }));
 //세션 미들웨어를 추가했다.
 app.use(session({ secret: "Hello!", resave: true, saveUninitialized: true }));
 
-app.get("/add-one", (req, res, next) => {
-  return res.send(`${req.session.id}`);
-});
+// app.use((req, res, next) => {
+//   req.sessionStore.all((error, sessions) => {
+//     console.log(sessions);
+//     next();
+//   });
+// });
 
+app.use(localsMiddleware);
 app.use("/", rootRouter);
 app.use("/users", userRouter);
 app.use("/videos", videoRouter);
