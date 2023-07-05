@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
@@ -15,7 +16,14 @@ app.use(logger);
 app.use(express.urlencoded({ extended: true }));
 
 //세션 미들웨어를 추가했다.
-app.use(session({ secret: "Hello!", resave: true, saveUninitialized: true }));
+app.use(
+  session({
+    secret: "Hello!",
+    resave: true,
+    saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: "mongodb://127.0.0.1:27017/wetube" }),
+  })
+);
 
 // app.use((req, res, next) => {
 //   req.sessionStore.all((error, sessions) => {
